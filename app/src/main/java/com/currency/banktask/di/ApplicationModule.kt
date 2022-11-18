@@ -53,6 +53,6 @@ class ApplicationModule {
         retrofit.create(CurrencyRemoteDS::class.java)
 
     @Provides
-    fun provideCurrencyRepository(usersRemoteDS: CurrencyRemoteDS) =
-        CurrencyRepository(usersRemoteDS)
+    fun provideCurrencyRepository(currencyRemoteDS: CurrencyRemoteDS) =
+        CurrencyRepository(currencyRemoteDS)
 }
