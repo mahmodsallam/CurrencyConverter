@@ -1,5 +1,6 @@
 package com.currency.banktask.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.currency.banktask.repo.CurrencyRepository
@@ -15,7 +16,8 @@ class CurrencyViewModel @Inject constructor(private val usersRepository: Currenc
     ViewModel() {
     val symbols = MutableLiveData<NetworkingViewState>()
     val currencyConvertResult = MutableLiveData<NetworkingViewState>()
-    fun getSymbols() {
+    fun getSymbols(): LiveData<NetworkingViewState> {
+        val result = MutableLiveData<NetworkingViewState>()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 symbols.postValue(NetworkingViewState.Loading)
@@ -24,6 +26,7 @@ class CurrencyViewModel @Inject constructor(private val usersRepository: Currenc
                 symbols.postValue(NetworkingViewState.Error(e.message.toString()))
             }
         }
+        return result
     }
 
     fun convertCurrency(from: String, to: String, amount: String) {
